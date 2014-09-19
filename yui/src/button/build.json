@@ -1,0 +1,10 @@
+{
+    "name": "moodle-atto_spreadsheet-button",
+    "builds": {
+        "moodle-atto_spreadsheet-button": {
+            "jsfiles": [
+                "button.js"
+            ]
+        }
+    }
+}

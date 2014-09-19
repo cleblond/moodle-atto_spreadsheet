@@ -1,0 +1,8 @@
+{
+    "moodle-atto_spreadsheet-button": {
+        "requires": [
+            "moodle-editor_atto-plugin",
+            "datatype-date"
+        ]
+    }
+}
