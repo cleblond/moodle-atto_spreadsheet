@@ -15,9 +15,7 @@
         <FIELD NAME="calc" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primarysid" TYPE="primary" FIELDS="sheetid"/>
-        <KEY NAME="primarycid" TYPE="primary" FIELDS="columnid"/>
-        <KEY NAME="primaryrid" TYPE="primary" FIELDS="rowid"/>
+        <KEY NAME="primarysid" TYPE="primary" FIELDS="sheetid, columnid, rowid"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="atto_spreadsheet_header" COMMENT="atto_spreadsheet_header table retrofitted from MySQL">
@@ -28,8 +26,7 @@
         <FIELD NAME="width" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primarysid" TYPE="primary" FIELDS="sheetidid"/>
-        <KEY NAME="primarycid" TYPE="primary" FIELDS="columnid"/>
+        <KEY NAME="primarysid" TYPE="primary" FIELDS="sheetid, columnid"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="atto_spreadsheet_sheet" COMMENT="atto_spreadsheet_sheet table retrofitted from MySQL">
