@@ -21,20 +21,23 @@
  * @copyright  2014 onwards Carl LeBlond
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-global $CFG, $DB;
+define('AJAX_SCRIPT', true);
 
 if (!isset($CFG)) {
     require_once("../../../../../config.php");
 }
-
+global $CFG, $DB, $USER;
 require_once($CFG->libdir . '/filelib.php');
 
-$datatype  = optional_param('datatype', "", PARAM_TEXT);
-$contextid = optional_param('contextid', 0, PARAM_INT);
+//$datatype  = optional_param('datatype', "", PARAM_TEXT);
+//$contextid = optional_param('contextid', 0, PARAM_INT);
 
 $id = time();
 
 $record = new stdClass();
-$record->sheetid         = $id;
-$record->key = '10000';
-$lastinsertid = $DB->insert_record('atto_spreadsheet_sheet', $record, false);
+$record->sheetid = $id;
+$record->userid = $USER->id;
+$record->accesskey = (string)rand();
+$DB->insert_record('atto_spreadsheet_sheet', $record, true);
+
+echo $id;

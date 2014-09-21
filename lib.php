@@ -63,6 +63,8 @@ function atto_spreadsheet_params_for_js($elementid, $options, $fpoptions) {
         
         //add our disabled param
         $params['disabled'] = $disabled;
+        //echo $USER->id;
+        $params['userid'] = $USER->id;
         
         //add our default flavor
         $params['defaultflavor'] = get_config('atto_spreadsheet','defaultflavor');
