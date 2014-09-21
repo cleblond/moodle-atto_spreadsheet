@@ -39,6 +39,6 @@ $record->sheetid = $id;
 $record->userid = $USER->id;
 $record->accesskey = (string)rand();
 $record->groupmode = $groupmode;
-$DB->insert_record('atto_spreadsheet_sheet', $record, true);
+$DB->insert_record('filter_spreadsheet_sheet', $record, true);
 
 echo $id;
