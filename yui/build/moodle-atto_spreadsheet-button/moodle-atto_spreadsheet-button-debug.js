@@ -165,7 +165,8 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
         if(math == false){mathattrib = 'math="false"';}
         var groupattrib = 'group="false"';  
         var groupaccess = Y.one("#groupaccess").get("checked");
-        if(groupaccess == true){groupattrib = 'group="true"';}
+        var groupmode = 0;
+        if(groupaccess == true){groupattrib = 'group="true"'; groupmode = 1}
         var readattrib = 'readonly="true"';
         if(readonly==false){readattrib = 'readonly="false"';}
            
@@ -195,14 +196,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                 };
             })(this);
             var params = "datatype=uploadfile";
-            params += "&paramone=X";
-            params += "&paramtwo=Y";
-            params += "&paramthree=image";
-            params += "&requestid=Z";
-            params += "&contextid=A";
-            params += "&component=user";
-            params += "&filearea=draft";
-            params += "&itemid=C";
+            params += "&groupmode="+groupmode;
             xhr.open("POST", M.cfg.wwwroot +
                 "/lib/editor/atto/plugins/spreadsheet/dblib.php",
                 true);

@@ -29,7 +29,7 @@ if (!isset($CFG)) {
 global $CFG, $DB, $USER;
 require_once($CFG->libdir . '/filelib.php');
 
-//$datatype  = optional_param('datatype', "", PARAM_TEXT);
+$groupmode  = optional_param('groupmode', 0, PARAM_INT);
 //$contextid = optional_param('contextid', 0, PARAM_INT);
 
 $id = time();
@@ -38,6 +38,7 @@ $record = new stdClass();
 $record->sheetid = $id;
 $record->userid = $USER->id;
 $record->accesskey = (string)rand();
+$record->groupmode = $groupmode;
 $DB->insert_record('atto_spreadsheet_sheet', $record, true);
 
 echo $id;
