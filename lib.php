@@ -67,7 +67,7 @@ function atto_spreadsheet_params_for_js($elementid, $options, $fpoptions) {
         $params['userid'] = $USER->id;
         
         //add our default flavor
-        $params['defaultflavor'] = get_config('atto_spreadsheet','defaultflavor');
+        //$params['defaultflavor'] = get_config('atto_spreadsheet','defaultflavor');
 
     return $params;
 }

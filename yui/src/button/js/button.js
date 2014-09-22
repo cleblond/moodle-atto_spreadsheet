@@ -139,7 +139,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                 FLAVORCONTROL: FLAVORCONTROL,
                 component: COMPONENTNAME,
                 defaultflavor: this.get('defaultflavor'),
-                clickedicon: clickedicon,
+                clickedicon: clickedicon
             }));
         this._form = content;
         this._form.one('.' + CSS.INPUTSUBMIT).on('click', this._doInsert, this);
@@ -160,17 +160,17 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
         var readonly = Y.one("#readonly").get("checked");
         var math = Y.one("#math").get("checked");
         var mathattrib = 'math="true"';
-        if(math == false){mathattrib = 'math="false"';}
-        var groupattrib = 'group="false"';  
+        if(math === false){mathattrib = 'math="false"';}
+        var groupattrib = 'group="false"';
         var groupaccess = Y.one("#groupaccess").get("checked");
         var groupmode = 0;
-        if(groupaccess == true){groupattrib = 'group="true"'; groupmode = 1}
+        if(groupaccess === true){groupattrib = 'group="true"'; groupmode = 1;}
         var readattrib = 'readonly="true"';
-        if(readonly==false){readattrib = 'readonly="false"';}
+        if(readonly === false){readattrib = 'readonly="false"';}
            
         //write key to db
- 	    var xhr = new XMLHttpRequest();
-            var ext = "png";
+            var xhr = new XMLHttpRequest();
+            //var ext = "png";
             // file received/failed
             var obj = this;
             xhr.onreadystatechange = (function() {
@@ -178,7 +178,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                     if (xhr.readyState === 4) {
                         var sheetid = xhr.responseText;
                         obj.editor.focus();
-                        sheet = '<span class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+'">SPREADSHEET</span>';
+                        sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+'"></div>';
                         console.log(sheet);
                         obj.get('host').insertContentAtFocusPoint(sheet);
                         obj.markUpdated();
