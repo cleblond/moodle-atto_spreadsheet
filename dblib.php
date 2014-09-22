@@ -30,14 +30,16 @@ global $CFG, $DB, $USER;
 require_once($CFG->libdir . '/filelib.php');
 
 $groupmode  = optional_param('groupmode', 0, PARAM_INT);
-//$contextid = optional_param('contextid', 0, PARAM_INT);
+$readonlymode  = optional_param('readonly', 'true', PARAM_TEXT);
 
 $id = time();
 
 $record = new stdClass();
 $record->sheetid = $id;
 $record->userid = $USER->id;
+if($readonlymode === 'true'){
 $record->accesskey = (string)rand();
+}
 $record->groupmode = $groupmode;
 $DB->insert_record('filter_spreadsheet_sheet', $record, true);
 

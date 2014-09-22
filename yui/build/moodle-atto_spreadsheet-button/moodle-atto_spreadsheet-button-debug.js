@@ -197,6 +197,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
             })(this);
             var params = "datatype=uploadfile";
             params += "&groupmode="+groupmode;
+            params += "&readonly="+readonly;
             xhr.open("POST", M.cfg.wwwroot +
                 "/lib/editor/atto/plugins/spreadsheet/dblib.php",
                 true);
@@ -208,8 +209,6 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
             xhr.send(params);
             
     
-
-
     }
 }, { ATTRS: {
         disabled: {
