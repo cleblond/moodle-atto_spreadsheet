@@ -42,6 +42,8 @@ var CSS = {
 var TEMPLATE = '' +
     '<form class="atto_form">' +
         '<div id="{{elementid}}_{{innerform}}" class="mdl-left">' +
+            '<label for="sheetname"><strong>Sheet name</strong></label>' +
+            '<input type="text" name="sheetname" id="sheetname" value=""><br/>' +
             '<label for="{{elementid}}_{{FLAVORCONTROL}}"><strong>{{get_string "enterflavor" component}}</strong></label>' +
             '<input type="checkbox" name="readonly" id="readonly" value="readonly" checked> Read-only<br/>' +
             '<input type="checkbox" name="groupaccess" id="groupaccess" value="groupaccess"> Group access<br/>' +
@@ -159,6 +161,8 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
         var uid = this.get('userid');
         var readonly = Y.one("#readonly").get("checked");
         var math = Y.one("#math").get("checked");
+        var sheetname = Y.one("#sheetname").get("value");
+        //alert(sheetname);
         var mathattrib = 'math="true"';
         if(math === false){mathattrib = 'math="false"';}
         var groupattrib = 'group="false"';
@@ -178,7 +182,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                     if (xhr.readyState === 4) {
                         var sheetid = xhr.responseText;
                         obj.editor.focus();
-                        sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+'"></div>';
+                        sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+' sheetname="'+sheetname+'"></div>';
                         console.log(sheet);
                         obj.get('host').insertContentAtFocusPoint(sheet);
                         obj.markUpdated();
@@ -196,6 +200,8 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
             var params = "datatype=uploadfile";
             params += "&groupmode="+groupmode;
             params += "&readonly="+readonly;
+            params += "&pageurl="+encodeURI(document.URL);
+            params += "&sheetname="+encodeURI(sheetname);
             xhr.open("POST", M.cfg.wwwroot +
                 "/lib/editor/atto/plugins/spreadsheet/dblib.php",
                 true);

@@ -31,16 +31,20 @@ require_once($CFG->libdir . '/filelib.php');
 
 $groupmode  = optional_param('groupmode', 0, PARAM_INT);
 $readonlymode  = optional_param('readonly', 'true', PARAM_TEXT);
+$pageurl  = optional_param('pageurl', 'true', PARAM_TEXT);
+$sheetname  = optional_param('sheetname', '', PARAM_TEXT);
 
 $id = time();
 
 $record = new stdClass();
 $record->sheetid = $id;
 $record->userid = $USER->id;
+$record->name = $sheetname;
 if($readonlymode === 'true'){
 $record->accesskey = (string)rand();
 }
 $record->groupmode = $groupmode;
+$record->pageurl = $pageurl;
 $DB->insert_record('filter_spreadsheet_sheet', $record, true);
 
 echo $id;
