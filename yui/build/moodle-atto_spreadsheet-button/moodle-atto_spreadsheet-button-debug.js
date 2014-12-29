@@ -184,7 +184,9 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                     if (xhr.readyState === 4) {
                         var sheetid = xhr.responseText;
                         obj.editor.focus();
-                        sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+' sheetname="'+sheetname+'"></div>';
+                        //sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+'" ></div>';
+                        sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'"></div>';
+
                         console.log(sheet);
                         obj.get('host').insertContentAtFocusPoint(sheet);
                         obj.markUpdated();
