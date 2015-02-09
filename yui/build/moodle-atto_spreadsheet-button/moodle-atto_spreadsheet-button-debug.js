@@ -160,7 +160,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
         this.getDialogue({
             focusAfterHide: null
         }).hide();
-        var uid = this.get('userid');
+        //var uid = this.get('userid');
         var readonly = Y.one("#readonly").get("checked");
         var math = Y.one("#math").get("checked");
         var sheetname = Y.one("#sheetname").get("value");
@@ -185,7 +185,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                         var sheetid = xhr.responseText;
                         obj.editor.focus();
                         //sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+'" ></div>';
-                        sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'"></div>';
+                        sheet = '<div class="eo_spreadsheet ' + sheetid +'"></div>';
 
                         console.log(sheet);
                         obj.get('host').insertContentAtFocusPoint(sheet);
