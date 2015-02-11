@@ -18,7 +18,7 @@
  * Strings for component 'atto_spreadsheet', language 'en'.
  *
  * @package    atto_spreadsheet
- * @copyright  COPYRIGHTINFO
+ * @copyright  2015 onwards Carl LeBlond
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,5 +31,5 @@ $string['nothingtoinsert'] = 'Nothing to insert!';
 $string['dialogtitle'] = 'Insert spreadsheet';
 $string['insert'] = 'Insert';
 $string['cancel'] = 'Cancel';
-$string['enterflavor'] = 'Choose Options';
-$string['defaultflavor'] = 'Default Ice Cream Flavor';
+$string['enteroptions'] = 'Choose Options';
+$string['viewspreadsheet'] = 'View Spreadsheet';

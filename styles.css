@@ -4,3 +4,8 @@ height: 128px;
 background-image:url([[pix:atto_spreadsheet|spreadsheet-icon]]);
 display:block
 }
+
+
+div.eo_spreadsheet {
+    cursor: pointer;
+}

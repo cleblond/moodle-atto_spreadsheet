@@ -44,7 +44,7 @@ var TEMPLATE = '' +
         '<div id="{{elementid}}_{{innerform}}" class="mdl-left">' +
             '<label for="sheetname"><strong>Sheet name</strong></label>' +
             '<input type="text" name="sheetname" id="sheetname" value=""><br/>' +
-            '<label for="{{elementid}}_{{FLAVORCONTROL}}"><strong>{{get_string "enterflavor" component}}</strong></label>' +
+            '<label for="{{elementid}}_{{FLAVORCONTROL}}"><strong>{{get_string "enteroptions" component}}</strong></label>' +
             '<input type="checkbox" name="readonly" id="readonly" value="readonly" checked> Read-only<br/>' +
             '<input type="checkbox" name="groupaccess" id="groupaccess" value="groupaccess"> Group access<br/>' +
             '<input type="checkbox" name="math" id="math" value="math" checked> Math functions<br/><br/>' +
@@ -52,9 +52,36 @@ var TEMPLATE = '' +
         '</div>' +
     '</form>';
 
+
+var SPREADSHEET = '<iframe src="http://desktop/moodle28/filter/spreadsheet/view.php?sheetid={{sheetid}}"  width="760" height="510" scrolling="no" frameBorder="0" ></iframe>';
+
+
 Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
 
   
+
+    /**
+     * A reference to the current selection at the time that the dialogue
+     * was opened.
+     *
+     * @property _currentSelection
+     * @type Range
+     * @private
+     */
+    _currentSelection: null,
+
+
+    /**
+     * The most recently selected spreadsheet.
+     *
+     * @param _selectedImage
+     * @type Node
+     * @private
+     */
+    _selectedImage: null,
+
+
+
     /**
      * Initialize the button
      *
@@ -72,10 +99,11 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                 iconComponent: 'atto_spreadsheet',
                 buttonName: 'spreadsheet',
                 callback: this._displayDialogue,
+                tags: 'div',
                 callbackArgs: 'spreadsheet'
             });
-        
-
+        this.editor.delegate('dblclick', this._displaySpreadsheet, 'div', this);
+        //this.editor.delegate('click', this._handleSpreadsheetClick, 'div', this);
     },
 
     /**
@@ -85,9 +113,111 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
      * @return {String} the name/id of the flavor form field
      * @private
      */
-    _getFlavorControlName: function(){
+ /*   _getFlavorControlName: function(){
         return(this.get('host').get('elementid') + '_' + FLAVORCONTROL);
+    },   */
+
+
+
+    /**
+     * Handle a click on an image.
+     *
+     * @method _handleClick
+     * @param {EventFacade} e
+     * @private
+     */
+    _handleSpreadsheetClick: function(e) {
+        var div = e.target;
+        
+        //console.log(div);
+        var selection = this.get('host').getSelectionFromNode(div);
+        //console.log(selection);
+        if (this.get('host').getSelection() !== selection) {
+            this.get('host').setSelection(selection);
+        }
     },
+
+
+
+    /**
+     * Display the spreadsheet.
+     *
+     * @method _displayDialogue
+     * @private
+     */
+    _displaySpreadsheet: function(e) {
+        // Store the current selection.
+        var div = e.target;
+        //console.log(div);
+        var classes = div.get('className');
+        var sheetids = classes.split(" ");
+        //console.log(sheetids[1]);
+        this._currentSelection = this.get('host').getSelection();
+        if (this._currentSelection === false) {
+            return;
+        }
+        //console.log(this._currentSelection);
+        // Reset the image dimensions.
+        //this._rawImageDimensions = null;
+
+        var viewdialogue = this.getDialogue({
+            //headerContent: M.util.get_string('viewspreadsheet', COMPONENTNAME),
+            width: 'auto',
+            focusAfterHide: true
+        });
+
+        // Set the dialogue content, and then show the dialogue.
+        viewdialogue.setStdModContent(Y.WidgetStdMod.HEADER, M.util.get_string('viewspreadsheet', COMPONENTNAME));
+        viewdialogue.set('bodyContent', this._getSpreadsheetContent(sheetids[1]))
+                .show();
+    },
+
+    /**
+     * Return the dialogue content for the tool, attaching any required
+     * events.
+     *
+     * @method _getDialogueContent
+     * @return {Node} The content to place in the dialogue.
+     * @private
+     */
+    _getSpreadsheetContent: function(sheet) {
+        //console.log(sheet);
+        var template = Y.Handlebars.compile(SPREADSHEET),
+            canShowFilepicker = this.get('host').canShowFilepicker('image'),
+            content = Y.Node.create(template({
+                elementid: this.get('host').get('elementid'),
+                CSS: CSS,
+                sheetid: sheet,
+                component: COMPONENTNAME
+            }));
+
+        this._form = content;
+
+        // Configure the view of the current image.
+        //this._applyImageProperties(this._form);
+
+        //this._form.one('.' + CSS.INPUTURL).on('blur', this._urlChanged, this);
+        //this._form.one('.' + CSS.IMAGEPRESENTATION).on('change', this._updateWarning, this);
+        //this._form.one('.' + CSS.INPUTALT).on('change', this._updateWarning, this);
+        //this._form.one('.' + CSS.INPUTWIDTH).on('blur', this._autoAdjustSize, this);
+        //this._form.one('.' + CSS.INPUTHEIGHT).on('blur', this._autoAdjustSize, this, true);
+        //this._form.one('.' + CSS.INPUTCONSTRAIN).on('change', function(event) {
+        //    if (event.target.get('checked')) {
+        //        this._autoAdjustSize(event);
+        //    }
+        //}, this);
+        //this._form.one('.' + CSS.INPUTURL).on('blur', this._urlChanged, this);
+        //this._form.one('.' + CSS.INPUTSUBMIT).on('click', this._setImage, this);
+
+        /*if (canShowFilepicker) {
+            this._form.one('.' + CSS.IMAGEBROWSER).on('click', function() {
+                    this.get('host').showFilepicker('image', this._filepickerCallback, this);
+            }, this);
+        } */
+
+        return content;
+    },
+
 
      /**
      * Display the spreadsheet Dialogue
@@ -98,19 +228,18 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
     _displayDialogue: function(e, clickedicon, date1) {
         e.preventDefault();
         var width=300;
-
-
         var dialogue = this.getDialogue({
             headerContent: M.util.get_string('dialogtitle', COMPONENTNAME),
-            width: width + 'px',
+            width: 'auto',
             focusAfterHide: clickedicon
         });
         //dialog doesn't detect changes in width without this
         //if you reuse the dialog, this seems necessary
+/*
         if(dialogue.width !== width + 'px'){
             dialogue.set('width',width+'px');
         }
-
+*/
         //append buttons to iframe
         var buttonform = this._getFormContent(clickedicon, date1);
 
@@ -118,6 +247,8 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
         bodycontent.append(buttonform);
 
         //set to bodycontent
+        //dialogue.set('headerContent', M.util.get_string('dialogtitle', COMPONENTNAME));
+        dialogue.setStdModContent(Y.WidgetStdMod.HEADER, M.util.get_string('dialogtitle', COMPONENTNAME));
         dialogue.set('bodyContent', bodycontent);
         dialogue.show();
         this.markUpdated();
@@ -185,7 +316,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                         //sheet = '<div class="eo_spreadsheet" sheet="'+sheetid+'" ' + mathattrib + ' ' + groupattrib + ' '+readattrib+' uid="'+uid+'" ></div>';
                         sheet = '<div class="eo_spreadsheet ' + sheetid +'"></div>';
 
-                        console.log(sheet);
+                        //console.log(sheet);
                         obj.get('host').insertContentAtFocusPoint(sheet);
                         obj.markUpdated();
                         if (xhr.status === 200) {
