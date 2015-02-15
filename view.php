@@ -18,10 +18,9 @@
 // Copyright 2012-2014 - Institute of Technology Blanchardstown.
 // --------------------------------------------------------- 
 /**
- * COURSE REQUEST MANAGER
  *
- * @package    block_cmanager
- * @copyright  2014 Kyle Goslin, Daniel McSweeney
+ * @package    atto_spreadsheet
+ * @copyright  2014 onward Carl LeBlond
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once("../../../../../config.php");
