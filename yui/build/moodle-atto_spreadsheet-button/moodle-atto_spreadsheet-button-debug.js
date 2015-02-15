@@ -55,7 +55,8 @@ var TEMPLATE = '' +
     '</form>';
 
 
-var SPREADSHEET = '<iframe src="http://desktop/moodle28/filter/spreadsheet/view.php?sheetid={{sheetid}}"  width="760" height="510" scrolling="no" frameBorder="0" ></iframe>';
+var SPREADSHEET = '<iframe src="http://desktop/moodle28/lib/editor/atto/plugins/spreadsheet/view.php?sheetid={{sheetid}}"' +
+                  'width="760" height="510" scrolling="no" frameBorder="0" ></iframe>';
 
 
 Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
@@ -104,7 +105,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                 tags: 'div',
                 callbackArgs: 'spreadsheet'
             });
-        this.editor.delegate('dblclick', this._displaySpreadsheet, 'div', this);
+        this.editor.delegate('dblclick', this._displaySpreadsheet, '.eo_spreadsheet', this);
         //this.editor.delegate('click', this._handleSpreadsheetClick, 'div', this);
     },
 
@@ -151,9 +152,13 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
         // Store the current selection.
         var div = e.target;
         //console.log(div);
+        //check if actually spreadsheet_div
         var classes = div.get('className');
         var sheetids = classes.split(" ");
         //console.log(sheetids[1]);
+
+
+
         this._currentSelection = this.get('host').getSelection();
         if (this._currentSelection === false) {
             return;
@@ -185,7 +190,6 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
     _getSpreadsheetContent: function(sheet) {
         //console.log(sheet);
         var template = Y.Handlebars.compile(SPREADSHEET),
-            canShowFilepicker = this.get('host').canShowFilepicker('image'),
             content = Y.Node.create(template({
                 elementid: this.get('host').get('elementid'),
                 CSS: CSS,
@@ -229,7 +233,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
      */
     _displayDialogue: function(e, clickedicon, date1) {
         e.preventDefault();
-        var width=300;
+        //var width='auto';
         var dialogue = this.getDialogue({
             headerContent: M.util.get_string('dialogtitle', COMPONENTNAME),
             width: 'auto',
