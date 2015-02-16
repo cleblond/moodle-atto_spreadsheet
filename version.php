@@ -31,3 +31,7 @@ $plugin->maturity  = MATURITY_BETA;
 // Human readable version informatiomn
 $plugin->release   = '1.0.0 (Build 2014042800)';
 
+$plugin->dependencies = array(
+    'filter_spreadsheet' => 2015020700
+);
+
