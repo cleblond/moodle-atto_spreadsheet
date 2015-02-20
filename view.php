@@ -49,35 +49,13 @@ echo $OUTPUT->header();
 //echo "chartid=".$chartid;
 
 if(isset($sheetid)){
-require_once($CFG->dirroot . "/filter/spreadsheet/codebase/php/grid_cell_connector.php");
 $result = $DB->get_record('filter_spreadsheet_sheet', array('sheetid'=>$sheetid));
 
-		if($result->userid == $USER->id){
-
-    			$script = '<script src="'.$CFG->wwwroot.'/filter/spreadsheet/codebase/spreadsheet.php?load=js"></script>';
-            		$script .= '<link rel="stylesheet" href="'.$CFG->wwwroot.'/filter/spreadsheet/codebase/dhtmlx_core.css">
-                       <link rel="stylesheet" href="'.$CFG->wwwroot.'/filter/spreadsheet/codebase/dhtmlxspreadsheet.css">
-                       <link rel="stylesheet" href="'.$CFG->wwwroot.'/filter/spreadsheet/codebase/dhtmlxgrid_wp.css">';
-
-
-
-            		$script .= '<script>window.onload = function() {
-		        
-			var dhx_sh1 = new dhtmlxSpreadSheet({
-				load: "'.$CFG->wwwroot.'/filter/spreadsheet/codebase/php/data.php",
-				save: "'.$CFG->wwwroot.'/filter/spreadsheet/codebase/php/data.php",
-				parent: "gridobj",
-				icons_path: "'.$CFG->wwwroot.'/filter/spreadsheet/codebase/imgs/icons/",
-				math: true,
-				autowidth: false,
-				autoheight: false
-			}); 
-			dhx_sh1.load("'.$result->sheetid.'" , "'.$result->accesskey.'");
-		        }
-	                </script>
-                        <div class="ssheet_cont" id="gridobj"></div>';
-
-                        echo $script;
-		}
+    if($result->userid == $USER->id){
+        $filteredtext = filter_manager::instance()->filter_text('<div class="eo_spreadsheet ' . $sheetid . '"></div>', $context);
+        //print_object($filteredtext);
+	echo $filteredtext;
+	//$result = $DB->get_record('filter_chart_users', array('id'=>$chartid));	
+    }
 
 }
