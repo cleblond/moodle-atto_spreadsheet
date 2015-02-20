@@ -55,7 +55,7 @@ var TEMPLATE = '' +
     '</form>';
 
 
-var SPREADSHEET = '<iframe src="http://desktop/moodle28/lib/editor/atto/plugins/spreadsheet/view.php?sheetid={{sheetid}}"' +
+var SPREADSHEET = '<iframe src="{{wwwroot}}/lib/editor/atto/plugins/spreadsheet/view.php?sheetid={{sheetid}}"' +
                   'width="760" height="510" scrolling="no" frameBorder="0" ></iframe>';
 
 
@@ -194,6 +194,7 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
                 elementid: this.get('host').get('elementid'),
                 CSS: CSS,
                 sheetid: sheet,
+                wwwroot: M.cfg.wwwroot,
                 component: COMPONENTNAME
             }));
 
