@@ -198,28 +198,6 @@ Y.namespace('M.atto_spreadsheet').Button = Y.Base.create('button', Y.M.editor_at
 
         this._form = content;
 
-        // Configure the view of the current image.
-        //this._applyImageProperties(this._form);
-
-        //this._form.one('.' + CSS.INPUTURL).on('blur', this._urlChanged, this);
-        //this._form.one('.' + CSS.IMAGEPRESENTATION).on('change', this._updateWarning, this);
-        //this._form.one('.' + CSS.INPUTALT).on('change', this._updateWarning, this);
-        //this._form.one('.' + CSS.INPUTWIDTH).on('blur', this._autoAdjustSize, this);
-        //this._form.one('.' + CSS.INPUTHEIGHT).on('blur', this._autoAdjustSize, this, true);
-        //this._form.one('.' + CSS.INPUTCONSTRAIN).on('change', function(event) {
-        //    if (event.target.get('checked')) {
-        //        this._autoAdjustSize(event);
-        //    }
-        //}, this);
-        //this._form.one('.' + CSS.INPUTURL).on('blur', this._urlChanged, this);
-        //this._form.one('.' + CSS.INPUTSUBMIT).on('click', this._setImage, this);
-
-        /*if (canShowFilepicker) {
-            this._form.one('.' + CSS.IMAGEBROWSER).on('click', function() {
-                    this.get('host').showFilepicker('image', this._filepickerCallback, this);
-            }, this);
-        } */
-
         return content;
     },
 
